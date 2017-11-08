@@ -49,8 +49,11 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(500);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
         Button button = (Button) findViewById(R.id.button2);
+
+        Button button2 = (Button) findViewById(R.id.button3);
+        button2.setOnClickListener(new SendText(getApplicationContext()));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

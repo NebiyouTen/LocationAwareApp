@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by nyismaw on 11/7/2017.
  */
 
-public class ButtonListener1 implements View.OnClickListener , OnMapReadyCallback {
+public class ShowMap implements View.OnClickListener , OnMapReadyCallback {
 
     @Override
     public void onClick(View v) {
