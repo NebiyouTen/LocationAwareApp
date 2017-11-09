@@ -1,9 +1,12 @@
 package com.example.nyismaw.androidproject2;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -17,10 +20,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -52,7 +57,8 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
         Button button = (Button) findViewById(R.id.button2);
 
-        Button button2 = (Button) findViewById(R.id.button3);
+
+   Button button2 = (Button) findViewById(R.id.button3);
         button2.setOnClickListener(new SendText(getApplicationContext()));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +72,7 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
 
             }
         });
-
-    }
+   }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -148,5 +153,6 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }
 

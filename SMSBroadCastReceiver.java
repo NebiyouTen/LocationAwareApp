@@ -12,17 +12,8 @@ import android.util.Log;
 
 public class SMSBroadCastReceiver extends BroadcastReceiver {
 
-    public SMSBroadCastReceiver() {
-        super();
-    }
-
-    @Override
-    public IBinder peekService(Context myContext, Intent service) {
-        return super.peekService(myContext, service);
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
-       Log.e("SMS","RECEIEVEEEEDDDD");
+       Log.e("SMS","**********************************RECEIEVVVVVVVVVVVVVVVEEEEDDDD");
     }
 }
