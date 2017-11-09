@@ -1,4 +1,8 @@
-package com.example.nyismaw.androidproject2;
+/*
+On my honor, as a Carnegie-Mellon Rwanda student, I have neither given nor received unauthorized assistance on this work.
+
+ */
+package com.example.nyismaw.androidproject2.Map;
 
 import android.location.Location;
 

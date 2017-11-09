@@ -1,12 +1,12 @@
+/*
+On my honor, as a Carnegie-Mellon Rwanda student, I have neither given nor received unauthorized assistance on this work.
+
+ */
 package com.example.nyismaw.androidproject2;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -20,23 +20,27 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.nyismaw.androidproject2.Map.AppLocationListener;
+import com.example.nyismaw.androidproject2.Map.MapCallBack;
+import com.example.nyismaw.androidproject2.SMS.SendText;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener  {
+        GoogleApiClient.OnConnectionFailedListener {
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
+    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
+    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +58,27 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(500);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
         Button button = (Button) findViewById(R.id.button2);
-
-
-   Button button2 = (Button) findViewById(R.id.button3);
+        Button button2 = (Button) findViewById(R.id.button3);
         button2.setOnClickListener(new SendText(getApplicationContext()));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Fragment f= new Map3();
-                FragmentManager fragman=  getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction transaction= fragman.beginTransaction();
-                transaction.replace(R.id.fragment,f);
+                Fragment f = new MapCallBack();
+                FragmentManager fragman = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction transaction = fragman.beginTransaction();
+                transaction.replace(R.id.fragment, f);
                 transaction.commit();
 
             }
         });
-   }
+    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        // Get the best provider between gps, network and passive
         Criteria criteria = new Criteria();
         String mProviderName = mLocationManager.getBestProvider(criteria, true);
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -96,54 +96,21 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
                 LocationServices.FusedLocationApi.requestLocationUpdates(
                         mGoogleApiClient, mLocationRequest, new AppLocationListener((TextView) findViewById(R.id.textView), (TextView) findViewById(R.id.textView2)));
             }
-
-            // No one provider activated: prompt GPS
             if (mProviderName == null || mProviderName.equals("")) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
         } else {
-
-            // The ACCESS_COARSE_LOCATION is denied, then I request it and manage the result in
-            // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
-                Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                        mGoogleApiClient);
-                if (mLastLocation != null) {
-                    ((TextView) findViewById(R.id.textView)).setText(String.valueOf(mLastLocation.getLatitude()));
-                    ((TextView) findViewById(R.id.textView)).setText(String.valueOf(mLastLocation.getLongitude()));
-                }
-                Log.e(" ON permission*****", "**************************");
+            Log.e(" ON perm2*****", "**************************");
 
 
-            }
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSION_ACCESS_FINE_LOCATION);
-                Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                        mGoogleApiClient);
-                if (mLastLocation != null) {
-                    ((TextView) findViewById(R.id.textView)).setText(String.valueOf(mLastLocation.getLatitude()));
-                    ((TextView) findViewById(R.id.textView)).setText(String.valueOf(mLastLocation.getLongitude()));
-                }
-                Log.e(" ON permission2*****", "**************************");
-
-
-            }
-
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSION_ACCESS_FINE_LOCATION);
         }
 
-
     }
-
-    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
-    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
-
-
-
-    String activity;
 
     @Override
     public void onConnectionSuspended(int i) {

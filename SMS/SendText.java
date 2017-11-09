@@ -1,6 +1,9 @@
-package com.example.nyismaw.androidproject2;
+/*
+On my honor, as a Carnegie-Mellon Rwanda student, I have neither given nor received unauthorized assistance on this work.
 
-import android.app.Activity;
+ */
+package com.example.nyismaw.androidproject2.SMS;
+
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,6 +13,8 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.nyismaw.androidproject2.Map.CurrentLocation;
 
 /**
  * Created by nyismaw on 11/7/2017.
@@ -24,7 +29,9 @@ public class SendText implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-         sendSMS("+250734598723","nebaa");
+         String msg= CurrentLocation.getLocation().getLatitude()+" , "+
+                 CurrentLocation.getLocation().getLongitude();
+         sendSMS("+250734598723",msg);
     }
     private void sendSMS(String mobNo, String message) {
         String smsSent = "SMS_SENT";

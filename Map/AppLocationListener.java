@@ -1,13 +1,15 @@
-package com.example.nyismaw.androidproject2;
+/*
+On my honor, as a Carnegie-Mellon Rwanda student, I have neither given nor received unauthorized assistance on this work.
+
+ */
+package com.example.nyismaw.androidproject2.Map;
 
 
 import android.location.Location;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationResult;
 
 /**
  * Created by nyismaw on 11/7/2017.
