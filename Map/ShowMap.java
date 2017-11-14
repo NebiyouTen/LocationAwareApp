@@ -14,21 +14,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ShowMap implements View.OnClickListener, OnMapReadyCallback {
 
+    private GoogleMap mMap;
+
     @Override
     public void onClick(View v) {
 
     }
-
-    private GoogleMap mMap;
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
-
 }

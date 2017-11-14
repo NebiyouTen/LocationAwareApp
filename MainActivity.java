@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nyismaw.androidproject2.Map.AppLocationListener;
+import com.example.nyismaw.androidproject2.Map.CurrentLocation;
 import com.example.nyismaw.androidproject2.Map.MapCallBack;
 import com.example.nyismaw.androidproject2.SMS.SendText;
 import com.google.android.gms.common.ConnectionResult;
@@ -90,6 +91,8 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
             if (mLastLocation != null) {
                 ((TextView) findViewById(R.id.textView)).setText(String.valueOf(mLastLocation.getLatitude()));
                 ((TextView) findViewById(R.id.textView2)).setText(String.valueOf(mLastLocation.getLongitude()));
+                CurrentLocation.setLocation(mLastLocation);
+
             }
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
